@@ -69,7 +69,15 @@ export default function App() {
 
         <div className="container mx-auto px-6 py-12 max-w-7xl">
           {/* Ad Top */}
-          <AdBanner id="adterra-top" label="Banner Topo (728x90 / 320x50)" type="top" className="mb-16 opacity-80 hover:opacity-100 transition-opacity" />
+          <AdBanner 
+            id="adterra-top" 
+            label="Banner Topo" 
+            type="top" 
+            adKey="4c458ef5f5f92d6bc9c8333912493b90"
+            width={728}
+            height={90}
+            className="mb-16 opacity-80 hover:opacity-100 transition-opacity" 
+          />
 
           {/* Hero Section */}
           <section className="text-center mb-24 space-y-8 max-w-4xl mx-auto">
@@ -130,7 +138,14 @@ export default function App() {
 
           {/* Ad Mid */}
           <div className="flex justify-center my-24">
-            <AdBanner id="adterra-mid" label="Banner Meio (300x250)" type="mid" />
+            <AdBanner 
+              id="adterra-mid" 
+              label="Banner Meio" 
+              type="mid" 
+              adKey="286e519a9e75e7c5592a84ac2f7286c5"
+              width={300}
+              height={250}
+            />
           </div>
 
           {/* Features Section */}
@@ -216,7 +231,15 @@ export default function App() {
           </section>
 
           {/* Ad Bottom */}
-          <AdBanner id="adterra-bottom" label="Banner Rodapé (728x90)" type="bottom" className="mt-12 opacity-80 hover:opacity-100 transition-opacity" />
+          <AdBanner 
+            id="adterra-bottom" 
+            label="Banner Rodapé" 
+            type="bottom" 
+            adKey="4c458ef5f5f92d6bc9c8333912493b90"
+            width={728}
+            height={90}
+            className="mt-12 opacity-80 hover:opacity-100 transition-opacity" 
+          />
         </div>
       </main>
 

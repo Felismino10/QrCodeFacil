@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { cn } from '../lib/utils';
 
 interface AdBannerProps {
@@ -6,38 +6,60 @@ interface AdBannerProps {
   label: string;
   className?: string;
   type?: 'top' | 'mid' | 'bottom';
+  adKey: string;
+  width: number;
+  height: number;
 }
 
-export const AdBanner: React.FC<AdBannerProps> = ({ id, label, className, type }) => {
-  // Define dimensions based on type for better layout stability
-  const getDimensions = () => {
-    switch (type) {
-      case 'top':
-      case 'bottom':
-        return "min-h-[50px] md:min-h-[90px] max-w-[728px]";
-      case 'mid':
-        return "min-h-[250px] w-[300px]";
-      default:
-        return "min-h-[90px]";
+export const AdBanner: React.FC<AdBannerProps> = ({ id, label, className, type, adKey, width, height }) => {
+  const bannerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (bannerRef.current && !bannerRef.current.querySelector('iframe')) {
+      const container = bannerRef.current;
+      
+      // Clear previous content if any
+      container.innerHTML = '';
+
+      // Create atOptions script
+      const scriptOptions = document.createElement('script');
+      scriptOptions.type = 'text/javascript';
+      scriptOptions.innerHTML = `
+        atOptions = {
+          'key' : '${adKey}',
+          'format' : 'iframe',
+          'height' : ${height},
+          'width' : ${width},
+          'params' : {}
+        };
+      `;
+      container.appendChild(scriptOptions);
+
+      // Create invoke script
+      const scriptInvoke = document.createElement('script');
+      scriptInvoke.type = 'text/javascript';
+      scriptInvoke.src = `https://www.highperformanceformat.com/${adKey}/invoke.js`;
+      container.appendChild(scriptInvoke);
     }
-  };
+  }, [adKey, width, height]);
 
   return (
     <div 
-      id={id} 
       className={cn(
-        "bg-muted/30 border border-dashed border-muted-foreground/30 rounded-lg flex items-center justify-center overflow-hidden mx-auto my-4 w-full",
-        getDimensions(),
+        "bg-muted/30 border border-dashed border-muted-foreground/30 rounded-lg flex flex-col items-center justify-center overflow-hidden mx-auto my-4 w-full",
         className
       )}
+      style={{ 
+        minHeight: `${height + 40}px`, 
+        maxWidth: type === 'mid' ? '300px' : `${width}px` 
+      }}
     >
-      <div className="text-center p-2">
-        <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Publicidade</p>
-        <div className="text-[10px] md:text-xs font-mono text-muted-foreground/40 italic break-words">
-          {label}
-        </div>
-        {/* ADTERRA SCRIPT AQUI */}
-      </div>
+      <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1 mt-2">Publicidade</p>
+      <div 
+        ref={bannerRef}
+        id={id}
+        className="w-full flex justify-center"
+      />
     </div>
   );
 };
