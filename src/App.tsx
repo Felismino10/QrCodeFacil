@@ -76,7 +76,16 @@ export default function App() {
             adKey="4c458ef5f5f92d6bc9c8333912493b90"
             width={728}
             height={90}
-            className="mb-16 opacity-80 hover:opacity-100 transition-opacity" 
+            className="mb-16 opacity-80 hover:opacity-100 transition-opacity hidden md:flex" 
+          />
+          <AdBanner 
+            id="adterra-top-mobile" 
+            label="Banner Topo Mobile" 
+            type="top" 
+            adKey="44841b1ce99cb20f55cb81a413be8457"
+            width={320}
+            height={50}
+            className="mb-8 opacity-80 hover:opacity-100 transition-opacity md:hidden" 
           />
 
           {/* Hero Section */}
@@ -235,9 +244,9 @@ export default function App() {
             id="adterra-bottom" 
             label="Banner Rodapé" 
             type="bottom" 
-            adKey="4c458ef5f5f92d6bc9c8333912493b90"
-            width={728}
-            height={90}
+            adKey="44841b1ce99cb20f55cb81a413be8457"
+            width={320}
+            height={50}
             className="mt-12 opacity-80 hover:opacity-100 transition-opacity" 
           />
         </div>
