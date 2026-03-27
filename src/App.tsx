@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { QRGenerator } from './components/QRGenerator';
 import { AdBanner } from './components/AdBanner';
 import { Logo } from './components/Logo';
 import { ShieldCheck, Zap, Download, Moon, Sun, ArrowRight, Star, Globe, Smartphone, QrCode } from 'lucide-react';
 import { motion } from 'motion/react';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 
-export default function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
-
+function Home({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean, setIsDarkMode: (val: boolean) => void }) {
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300 font-sans">
       {/* SEO Schema Markup */}
@@ -38,12 +31,15 @@ export default function App() {
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
 
           <div className="flex items-center gap-6">
             <nav className="hidden md:flex items-center gap-8 mr-8">
               <a href="#generator" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Gerador</a>
               <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Recursos</a>
+              <Link to="/blog" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Blog</Link>
               <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">Sobre</a>
             </nav>
             
@@ -270,5 +266,27 @@ export default function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
